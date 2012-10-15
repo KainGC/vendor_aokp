@@ -14,6 +14,8 @@ then
 else
    OUT_TARGET_HOST=darwin-x86
    MD5=md5
+
+
    XARGS="xargs -n 1 -P `sysctl hw.ncpu | awk '{print $2}'`"
    SED=gsed
 fi
@@ -156,9 +158,10 @@ rm -rf $REPACK/ota/recovery
 
 # Determine what to name the new signed package
 
+DATE=$(date +%h-%d-%y)
 #MODVERSION=`sed -n -e'/ro\.modversion/s/^.*=//p' $REPACK/ota/system/build.prop`
 VERSION=`sed -n -e'/ro.aokp.version/s/^.*=//p' $REPACK/ota/system/build.prop`
-MODVERSION="$VERSION"
+MODVERSION="$VERSION"_"$DATE"
 OUTFILE=$OUT/$MODVERSION.zip
 
 # Pack it up and sign
